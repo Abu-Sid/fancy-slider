@@ -1,3 +1,6 @@
+//(Extra feature)=>loading-spinner, carousel closed button, 
+//non-match output error massage 
+
 const imagesArea = document.querySelector('.images');
 const gallery = document.querySelector('.gallery');
 const galleryHeader = document.querySelector('.gallery-header');
@@ -147,7 +150,7 @@ document.getElementById('search').addEventListener('keypress',function(event){
 sliderBtn.addEventListener('click', function () {
   createSlider()
 })
-//loading spinner  
+//(Extra feature)===loading spinner 
 const toggleSpinner=(show)=>{
   const spinner=document.getElementById('loading-spinner');
   if (show){
@@ -156,7 +159,7 @@ const toggleSpinner=(show)=>{
     spinner.classList.add('d-none')
   }
 }
-//error massage for empty result
+//(Extra feature)===Error massage for empty result
 const toggleMassage=(show)=>{
   const massage=document.getElementById('error-massage');
   if (show){
@@ -167,7 +170,7 @@ const toggleMassage=(show)=>{
     massage.classList.add('d-none')
   }
 }
-//carousel close button 
+//(Extra feature)===carousel close button
 document.getElementById('close-button').addEventListener('click',function(){
   
   document.querySelector('.main').style.display = 'none';
