@@ -53,6 +53,7 @@ img {
 
 .main {
   display: none;
+  position: relative;
 }
 
 @media (max-width: 767px) {
@@ -63,4 +64,9 @@ img {
     height: 300px;
     width: 90%;
   }
+}
+#close-button{
+  position: absolute;
+  left: 820px;
+  bottom: 380px; 
 }

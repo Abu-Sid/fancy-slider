@@ -67,16 +67,19 @@ const createSlider = () => {
     return;
   }
   
-    // crate slider previous next area
+    // create slider previous next area
     sliderContainer.innerHTML = "";
     const prevNext = document.createElement("div");
     prevNext.className =
-      "prev-next d-flex w-100 justify-content-between align-items-center";
+      "prev-next  w-100";
     prevNext.innerHTML = `
-  <div> 
-  <span class="prev" onclick="changeItem(-1)"><i class="fas fa-chevron-left"></i></span></div>
-  <div><span class="next" onclick="changeItem(1)"><i class="fas fa-chevron-right"></i></span>
-  </div>`;
+    <div class="d-flex justify-content-between align-items-center">
+    <div> 
+    <span class="prev" onclick="changeItem(-1)"><i class="fas fa-chevron-left"></i></span></div>
+    <div><span class="next" onclick="changeItem(1)"><i class="fas fa-chevron-right"></i></span>
+    </div>
+    </div>
+    `;
 
     sliderContainer.appendChild(prevNext);
     document.querySelector(".main").style.display = "block";
@@ -158,7 +161,13 @@ const toggleMassage=(show)=>{
   if (show){
     massage.classList.remove('d-none')
     imagesArea.style.display = 'none';
+    document.getElementById('search').value=''
   }else{
     massage.classList.add('d-none')
   }
 }
+document.getElementById('close-button').addEventListener('click',function(){
+  
+  document.querySelector('.main').style.display = 'none';
+  document.getElementById('search').value=''
+})
