@@ -22,7 +22,8 @@ const showImages = (images) => {
   images.forEach(image => {
     let div = document.createElement('div');
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
-    div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
+    div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">
+    `;
     gallery.appendChild(div)
     toggleSpinner(false)
   })
@@ -31,12 +32,16 @@ const showImages = (images) => {
 
 const getImages = (query) => {
   toggleSpinner(true)
+  toggleMassage(false)
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
-   .then(data=>showImages(data.hits))
-    // .then(data => console.log(data.hits))
-    //{
-    //    return alert('no data')}else{showImages(data.hits)}})
+   .then(data=>{
+    if (data.total > 0) {
+      showImages(data.hits)
+    } else {
+      toggleMassage(true)
+    }
+  })
     .catch(err => console.log(err))
 }
 
@@ -61,31 +66,26 @@ const createSlider = () => {
     alert("Select at least 2 image.");
     return;
   }
-  //set duration input field empty
-  document.getElementById("duration").value = "";
-  //slide duration condition set
-  const duration = document.getElementById("duration").value;
-  if (duration >= 0) {
+  
     // crate slider previous next area
     sliderContainer.innerHTML = "";
     const prevNext = document.createElement("div");
     prevNext.className =
       "prev-next d-flex w-100 justify-content-between align-items-center";
-    prevNext.innerHTML = ` 
-  <span class="prev" onclick="changeItem(-1)"><i class="fas fa-chevron-left"></i></span>
-  <span class="next" onclick="changeItem(1)"><i class="fas fa-chevron-right"></i></span>
-  `;
+    prevNext.innerHTML = `
+  <div> 
+  <span class="prev" onclick="changeItem(-1)"><i class="fas fa-chevron-left"></i></span></div>
+  <div><span class="next" onclick="changeItem(1)"><i class="fas fa-chevron-right"></i></span>
+  </div>`;
 
     sliderContainer.appendChild(prevNext);
     document.querySelector(".main").style.display = "block";
     // hide image aria
     imagesArea.style.display = "none";
-
-    const duration = document.getElementById("duration").value || 1000;
-    // if(duration < 0){
-    //   alert('Please set a positive value for duration');
-    //   return;
-    // }
+    
+    const durationValue = document.getElementById("duration").value
+    //set duration default 1000 if input value negative
+    const duration =  durationValue >0 ? durationValue : 1000;
     sliders.forEach((slide) => {
       let item = document.createElement("div");
       item.className = "slider-item";
@@ -99,10 +99,8 @@ const createSlider = () => {
       slideIndex++;
       changeSlide(slideIndex);
     }, duration);
-  } else {
-    alert("Please set a positive value for duration");
-    document.getElementById("duration").value = "";
-  }
+    document.getElementById("duration").value = "";//set duration input field empty
+
 }
 
 // change slider index 
@@ -154,6 +152,13 @@ const toggleSpinner=(show)=>{
   }else{
     spinner.classList.add('d-none')
   }
-  
-  
+}
+const toggleMassage=(show)=>{
+  const massage=document.getElementById('error-massage');
+  if (show){
+    massage.classList.remove('d-none')
+    imagesArea.style.display = 'none';
+  }else{
+    massage.classList.add('d-none')
+  }
 }
