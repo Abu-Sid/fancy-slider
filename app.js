@@ -10,7 +10,6 @@ const sliderContainer = document.getElementById('sliders');
 // selected image 
 let sliders = [];
 
-
 // If this key doesn't work
 // Find the name in the url and go to their website
 // to create your own api key
@@ -30,7 +29,6 @@ const showImages = (images) => {
     gallery.appendChild(div)
     toggleSpinner(false)
   })
-
 }
 
 const getImages = (query) => {
@@ -51,8 +49,6 @@ const getImages = (query) => {
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
-  
- 
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
@@ -69,7 +65,6 @@ const createSlider = () => {
     alert("Select at least 2 image.");
     return;
   }
-  
     // create slider previous next area
     sliderContainer.innerHTML = "";
     const prevNext = document.createElement("div");
@@ -83,14 +78,11 @@ const createSlider = () => {
     </div>
     </div>
     `;
-
     sliderContainer.appendChild(prevNext);
     document.querySelector(".main").style.display = "block";
     // hide image aria
     imagesArea.style.display = "none";
-    
     const durationValue = document.getElementById("duration").value
-    //set duration default 1000 if input value negative
     const duration =  durationValue >0 ? durationValue : 1000;
     sliders.forEach((slide) => {
       let item = document.createElement("div");
@@ -106,7 +98,6 @@ const createSlider = () => {
       changeSlide(slideIndex);
     }, duration);
     document.getElementById("duration").value = "";//set duration input field empty
-
 }
 
 // change slider index 
@@ -176,3 +167,15 @@ document.getElementById('close-button').addEventListener('click',function(){
   document.querySelector('.main').style.display = 'none';
   document.getElementById('search').value=''
 })
+//set create slide button disable if duration negative
+let DurationInput = document.querySelector("#duration");
+let button = document.querySelector("#create-slider");
+button.disabled = true;
+DurationInput.addEventListener("change", stateHandle);
+function stateHandle() {
+  if (document.querySelector("#duration").value <0) {
+    button.disabled = true;
+  } else {
+    button.disabled = false;
+  }
+}
