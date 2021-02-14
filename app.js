@@ -54,7 +54,7 @@ const selectItem = (event, img) => {
     sliders.push(img);
     element.classList.add('added');
   } else {
-    sliders.pop(img)
+    delete sliders[item];
     element.classList.toggle('added');
   }
 }
@@ -170,7 +170,7 @@ document.getElementById('close-button').addEventListener('click',function(){
 //set create slide button disable if duration negative
 let DurationInput = document.querySelector("#duration");
 let button = document.querySelector("#create-slider");
-button.disabled = true;
+button.disabled = false;
 DurationInput.addEventListener("change", stateHandle);
 function stateHandle() {
   if (document.querySelector("#duration").value <0) {
